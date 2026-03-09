@@ -8,7 +8,8 @@ pipeline{
             steps{
                 git branch = 'main',url:'https://github.com/rohinicc/jenkins_ansible.git'
            }
-         steps{
+        }
+            steps{
                 sh """
                 su - ansible -c "ansible-playbook -i 172.31.5.196 playbook.yml"               
                 """
