@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('pull for git repo'){
             steps{
-                git branch = 'main' , url:'https://github.com/rohinicc/jenkins_ansible.git'
+                git branch : 'main' , url:'https://github.com/rohinicc/jenkins_ansible.git'
            }
         }
         stage('run ansible playbook'){
