@@ -11,6 +11,6 @@
 
     - name: Start nginx
       command: systemctl start nginx
-
+      
     - name: Check nginx version
       command: nginx -v    
