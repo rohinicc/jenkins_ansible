@@ -12,7 +12,7 @@ pipeline{
         stage('run ansible playbook'){
             steps{
                 sh """
-                su - ansible -c "ansible-playbook -i 172.31.5.196 playbook.yml"               
+                ansible-playbook -i "172.31.5.196" playbook.yml               
                 """
             }
         }
