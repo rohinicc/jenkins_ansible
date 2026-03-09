@@ -12,7 +12,7 @@ pipeline{
         stage('run ansible playbook'){
             steps{
                 sh """
-                ansible-playbook -i "172.31.5.196" playbook.yml               
+                ansible-playbook -i inventory playbook.yml               
                 """
             }
         }
