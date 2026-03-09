@@ -8,9 +8,9 @@
   tasks:
   - name: Install nginx
     command: apt install nginx -y
+
   - name: Start nginx
     command: systemctl start nginx
-  - name: Check nginx 
-    command: which nginx
+    
   - name: Check nginx version
     command: nginx -v    
