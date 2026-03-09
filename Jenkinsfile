@@ -12,7 +12,7 @@ pipeline{
         stage('run ansible playbook'){
             steps{
                 sh """
-                sudo -u ansible ansible-playbook -i inventory playbook.yml               
+                sudo su - ansible -c "ansible-playbook -i inventory playbook.yml"            
                 """
             }
         }
