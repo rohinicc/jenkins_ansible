@@ -1,0 +1,55 @@
+Fix — Add Jenkins to Sudoers
+Step 1 — Add jenkins user to sudoers
+bash# On Jenkins server, open sudoers file
+sudo visudo
+
+# Add these lines at the bottom:
+jenkins ALL=(ansible) NOPASSWD: ALL
+ansible ALL=(ALL) NOPASSWD: ALL
+
+Step 2 — Verify jenkins user sudoers
+bashsudo cat /etc/sudoers | grep jenkins
+# Should show: jenkins ALL=(ansible) NOPASSWD: ALL
+
+Step 3 — Update Jenkinsfile to use correct sudo command
+groovypipeline {
+    agent any
+    environment {
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
+    }
+    stages {
+        stage('Pull from Git Repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/rohinicc/jenkins_ansible.git'
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                sh """
+                sudo -u ansible ansible-playbook -i inventory playbook.yml -v
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Ansible playbook executed successfully!'
+        }
+        failure {
+            echo '❌ Pipeline failed. Check logs above.'
+        }
+    }
+}
+
+Step 4 — Verify sudoers works
+bash# Test from jenkins user
+sudo -u jenkins sudo -u ansible ansible --version
+
+Step 5 — Push and Run Jenkins
+bashgit add Jenkinsfile
+git commit -m "fix: corrected sudo command in jenkinsfile"
+git push origin main
+
+The key fix is sudo -u ansible instead of sudo su - ansible -c — push and run again! 🚀
